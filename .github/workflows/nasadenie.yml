@@ -1,0 +1,63 @@
+name: Nasadenie na GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # umožní spustiť nasadenie aj ručne z karty Actions
+  workflow_dispatch:
+
+# potrebné oprávnenia na zverejnenie stránky
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# naraz beží len jedno nasadenie, rozbehnuté sa nechá dokončiť
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  kontrola:
+    name: Kontrola súborov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Kontrola syntaxe JavaScriptu
+        run: for f in *.js; do node --check "$f"; done
+
+      - name: Kontrola manifestu
+        run: node -e "JSON.parse(require('fs').readFileSync('manifest.json'))"
+
+      - name: Všetky súbory sú v offline zozname
+        run: |
+          node -e "
+          const fs=require('fs');
+          const sw=fs.readFileSync('sw.js','utf8');
+          const chyba=fs.readdirSync('.')
+            .filter(f=>/\.(html|css|js|json|png)\$/.test(f) && f!=='sw.js')
+            .filter(f=>!sw.includes('./'+f));
+          if(chyba.length){console.error('Chýba v sw.js:',chyba.join(', '));process.exit(1)}
+          console.log('OK – offline zoznam je úplný');
+          "
+
+  nasadenie:
+    name: Nasadenie
+    needs: kontrola
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.nasadenie.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/configure-pages@v6
+
+      # stránka nepotrebuje žiadne zostavenie, nahráva sa tak, ako je
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - id: nasadenie
+        uses: actions/deploy-pages@v5

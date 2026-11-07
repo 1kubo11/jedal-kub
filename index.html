@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Plánovač jedálničkov z fitness receptov. Všetko zostáva v tvojom telefóne.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15140f" media="(prefers-color-scheme: dark)">
+<!-- pridanie na plochu v iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Jedálniček">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Fitness jedálniček</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c2410c'/%3E%3Cpath d='M20 14v16a6 6 0 0 0 6 6v14a3 3 0 0 0 6 0V36a6 6 0 0 0 6-6V14M26 14v12M32 14v12' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3Cpath d='M46 14c-4 4-5 10-5 15s2 7 5 7v14a3 3 0 0 0 0 0' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-row">
+    <div style="flex:1;min-width:0">
+      <h1 id="hdrTtl">Jedálniček</h1>
+      <div class="sub" id="hdrSub">—</div>
+    </div>
+    <button class="icon-btn hide" id="btnTheme" title="Tmavý / svetlý režim">🌗</button>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="plan"  class="on"><span class="ic">📅</span>Jedálniček</button>
+  <button data-tab="rec"><span class="ic">📖</span>Recepty</button>
+  <button data-tab="buy"><span class="ic">🛒</span>Nákup</button>
+  <button data-tab="set"><span class="ic">⚙️</span>Nastavenia</button>
+</nav>
+
+<div id="sheet"></div>
+<div id="toast"></div>
+
+<script src="data-ck.js"></script>
+<script src="data-kbv.js"></script>
+<script src="data-jk.js"></script>
+<script src="data-mbv.js"></script>
+<script src="data.js"></script>
+<script src="suroviny.js"></script>
+<script src="app.js"></script>
+<script>
+// offline režim – registrujeme len na skutočnom serveri (nie pri otvorení súboru z disku)
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => {
+    // pri prvej návšteve sa neobnovuje, len pri skutočnej novej verzii
+    const uzBezal = !!navigator.serviceWorker.controller;
+    let obnovene = false;
+    navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(() => {});
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (!uzBezal || obnovene) return;   // poistka proti nekonečnému obnovovaniu
+      obnovene = true;
+      location.reload();
+    });
+  });
+}
+</script>
+</body>
+</html>
