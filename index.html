@@ -51,8 +51,11 @@
 <script src="suroviny.js"></script>
 <script src="app.js"></script>
 <script>
-// offline režim – registrujeme len na skutočnom serveri (nie pri otvorení súboru z disku)
-if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+// Offline režim registrujeme len tam, kde appka býva sama na svojej adrese:
+// nie pri otvorení súboru z disku a nie na claude.ai, kde by rozsah "./" zasahoval
+// aj do ostatných artefaktov.
+const vlastnaAdresa = location.protocol.startsWith("http") && !/(^|\.)claude\.ai$/i.test(location.hostname);
+if ("serviceWorker" in navigator && vlastnaAdresa) {
   window.addEventListener("load", () => {
     // pri prvej návšteve sa neobnovuje, len pri skutočnej novej verzii
     const uzBezal = !!navigator.serviceWorker.controller;
