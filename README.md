@@ -54,8 +54,12 @@ poškodené suroviny; má príznak `odhad:true` a poznámku priamo v appke.
 
 ## Úpravy
 
-Keď zmeníš ktorýkoľvek súbor, **zvýš číslo verzie v `sw.js`** (`const VERZIA = "jedalnicek-v1"`),
-inak si telefón nechá starú verziu uloženú v pamäti.
+Keď zmeníš ktorýkoľvek súbor, **zvýš číslo verzie v `sw.js`** (`const VERZIA = PREFIX + "v2"`
+→ `"v3"`), inak si telefón nechá starú verziu uloženú v pamäti.
+
+Appka beží na adrese `1kubo11.github.io`, kde je aj *den-po-dni*, a pamäť prehliadača je pre
+celú adresu spoločná. Preto `sw.js` maže iba cache s prefixom `jedalnicek-` a hľadá iba
+vo vlastnej – nech si tie dve appky nelezú do offline režimu. Ten prefix nemeň.
 
 Lokálne spustenie s offline režimom (service worker potrebuje server, nestačí dvojklik):
 

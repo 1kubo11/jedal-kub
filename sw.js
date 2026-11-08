@@ -1,6 +1,7 @@
 /* Service worker – aby aplikácia fungovala aj úplne bez internetu.
    Pri každej zmene súborov zvýš číslo verzie, inak si telefón nechá staré. */
-const VERZIA = "jedalnicek-v1";
+const PREFIX = "jedalnicek-";
+const VERZIA = PREFIX + "v2";
 
 const SUBORY = [
   "./",
@@ -29,11 +30,15 @@ self.addEventListener("install", e => {
   );
 });
 
-// po aktivácii vyhodíme staré verzie
+// Po aktivácii vyhodíme staré verzie – ale IBA tie naše.
+// Na 1kubo11.github.io býva aj appka den-po-dni a pamäť je pre celú adresu spoločná,
+// takže bez kontroly prefixu by sme jej vymazali offline režim.
 self.addEventListener("activate", e => {
   e.waitUntil(
     caches.keys()
-      .then(mena => Promise.all(mena.filter(m => m !== VERZIA).map(m => caches.delete(m))))
+      .then(mena => Promise.all(
+        mena.filter(m => m.startsWith(PREFIX) && m !== VERZIA).map(m => caches.delete(m))
+      ))
       .then(() => self.clients.claim())
   );
 });
@@ -52,21 +57,19 @@ self.addEventListener("fetch", e => {
           caches.open(VERZIA).then(c => c.put("./index.html", kopia));
           return r;
         })
-        .catch(() => caches.match("./index.html").then(r => r || caches.match("./")))
+        .catch(() => caches.open(VERZIA).then(c => c.match("./index.html").then(r => r || c.match("./"))))
     );
     return;
   }
 
+  // hľadáme len vo vlastnej pamäti, nie v pamäti ostatných appiek na tej istej adrese
   e.respondWith(
-    caches.match(req).then(ulozene => {
+    caches.open(VERZIA).then(c => c.match(req).then(ulozene => {
       if (ulozene) return ulozene;
       return fetch(req).then(r => {
-        if (r && r.ok && r.type === "basic") {
-          const kopia = r.clone();
-          caches.open(VERZIA).then(c => c.put(req, kopia));
-        }
+        if (r && r.ok && r.type === "basic") c.put(req, r.clone());
         return r;
       });
-    })
+    }))
   );
 });
