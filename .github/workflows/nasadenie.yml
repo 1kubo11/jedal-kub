@@ -52,10 +52,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Pages musia byť v Settings → Pages prepnuté na zdroj "GitHub Actions",
+      # zapnúť ich odtiaľto nedokážeme – token workflowu na to nemá práva.
       - uses: actions/configure-pages@v6
-        with:
-          # zapne GitHub Pages pri prvom behu, netreba to klikať v nastaveniach
-          enablement: true
 
       # stránka nepotrebuje žiadne zostavenie, nahráva sa tak, ako je
       - uses: actions/upload-pages-artifact@v4
