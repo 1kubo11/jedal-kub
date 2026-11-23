@@ -1,7 +1,7 @@
 /* Service worker – aby aplikácia fungovala aj úplne bez internetu.
    Pri každej zmene súborov zvýš číslo verzie, inak si telefón nechá staré. */
 const PREFIX = "jedalnicek-";
-const VERZIA = PREFIX + "v3";
+const VERZIA = PREFIX + "v4";
 
 const SUBORY = [
   "./",
@@ -14,6 +14,7 @@ const SUBORY = [
   "./data.js",
   "./suroviny.js",
   "./techniky.js",
+  "./postupy-obedy.js",
   "./app.js",
   "./manifest.json",
   "./apple-touch-icon.png",

@@ -654,10 +654,13 @@
      sa v rámci jedného receptu neopakuje. */
   function postupHTML(r) {
     const pod = S.nastavenia.podrobne !== false;
+    // pri obedoch do krabičky máme postup rozpísaný ručne – ten má prednosť
+    // pred všeobecnými vysvetleniami, lebo tie sú už zapracované priamo v texte
+    const rozpisany = pod && window.POSTUPY && window.POSTUPY[r.id];
     const uz = [];
-    const kroky = r.st.map((s, i) => {
+    const kroky = (rozpisany || r.st).map((s, i) => {
       let h = '<div class="step"><div class="no">' + (i + 1) + '</div><div class="stx"><div class="sth">' + esc(s) + "</div>";
-      if (pod) TK.kuKroku(s, uz).forEach(k => {
+      if (pod && !rozpisany) TK.kuKroku(s, uz).forEach(k => {
         uz.push(k);
         const t = TK.T[k];
         h += '<div class="vys"><div class="vh">' + esc(t.nazov) + "</div>" +
@@ -676,7 +679,8 @@
         "Meraj v najhrubšom mieste a nedotýkaj sa kosti.</div></div>"
       : "";
 
-    return '<div class="card"><div class="card-h"><div class="card-t" style="margin:0">Postup</div>' +
+    return '<div class="card"><div class="card-h"><div class="card-t" style="margin:0">Postup' +
+      (rozpisany ? ' <span class="tag mp">rozpísaný</span>' : "") + "</div>" +
       '<div class="seg" id="pp"><button data-pod="0"' + (pod ? "" : ' class="on"') + ">Stručne</button>" +
       '<button data-pod="1"' + (pod ? ' class="on"' : "") + ">Podrobne</button></div></div>" +
       kroky + tepHTML + "</div>";

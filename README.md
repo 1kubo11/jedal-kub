@@ -17,8 +17,10 @@ Namáčaj bez výčitiek). Celé po slovensky, robené na mobil, dáta zostávaj
 - **Recepty** – vyhľadávanie v názvoch aj surovinách, filtre (kategória, kalórie, bielkoviny,
   štítky, ebook), detail s postupom, prepočet surovín na ľubovoľný počet porcií
   a režim varenia s veľkým písmom.
-- **Podrobný postup** – ku každému kroku sa dá zobraziť vysvetlenie techniky: čo sa pri tom deje,
-  podľa čoho spoznáš, že je to hotové, a kde sa to dá pokaziť. Prepína sa Stručne / Podrobne.
+- **Podrobný postup** – prepína sa Stručne / Podrobne. Všetkých **167 obedov do krabičky** má
+  postup rozpísaný ručne (`postupy-obedy.js`) – rovnaké suroviny a poradie ako v ebooku, len
+  s časmi, teplotami a tým, podľa čoho spoznáš, že krok je hotový. Ostatné recepty dostanú
+  vysvetlenia techník podľa kľúčových slov (`techniky.js`).
 - **Obľúbené a zakázané suroviny** – obľúbené generátor uprednostňuje, recepty so zakázanou
   surovinou sa nikdy neponúknu ani nezobrazia.
 - **Nákupný zoznam** – automaticky z celého týždňa, rovnaké suroviny spočítané a zoradené
@@ -36,7 +38,8 @@ Namáčaj bez výčitiek). Celé po slovensky, robené na mobil, dáta zostávaj
 | `data-ck.js`, `data-kbv.js`, `data-jk.js`, `data-mbv.js` | recepty po ebookoch (100 + 105 + 50 + 57) |
 | `data.js` | spojí recepty dokopy, zoznam ebookov, kategórií a štítkov |
 | `suroviny.js` | rozpoznávanie surovín, prepočet množstiev, oddelenia obchodu, rozpoznanie prílohy |
-| `techniky.js` | kuchárske vysvetlenia ku krokom postupu |
+| `techniky.js` | kuchárske vysvetlenia ku krokom postupu (podľa kľúčových slov) |
+| `postupy-obedy.js` | ručne rozpísané postupy ku všetkým obedom do krabičky |
 | `app.js` | generátor jedálnička, obedy na týždeň, obrazovky, ukladanie |
 | `sw.js` | offline režim |
 
@@ -61,8 +64,8 @@ poškodené suroviny; má príznak `odhad:true` a poznámku priamo v appke.
 
 ## Úpravy
 
-Keď zmeníš ktorýkoľvek súbor, **zvýš číslo verzie v `sw.js`** (`const VERZIA = PREFIX + "v3"`
-→ `"v4"`), inak si telefón nechá starú verziu uloženú v pamäti. To isté platí aj pri testovaní
+Keď zmeníš ktorýkoľvek súbor, **zvýš číslo verzie v `sw.js`** (`const VERZIA = PREFIX + "v4"`
+→ `"v5"`), inak si telefón nechá starú verziu uloženú v pamäti. To isté platí aj pri testovaní
 na localhoste – service worker servíruje z pamäte, takže zmeny neuvidíš, kým cache nevyčistíš.
 
 Appka beží na adrese `1kubo11.github.io`, kde je aj *den-po-dni*, a pamäť prehliadača je pre
