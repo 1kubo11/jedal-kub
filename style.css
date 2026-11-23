@@ -188,6 +188,26 @@ ul.ings li::before { content: "•"; color: var(--accent); font-weight: 800; }
 .pozn { background: var(--warn-soft); color: var(--warn); border-radius: 12px; padding: 11px 13px; font-size: 14px; font-weight: 600; }
 .tipbox { background: var(--accent-soft); border-radius: 12px; padding: 12px 14px; font-size: 14.5px; }
 
+/* ——— knižné vysvetlenia pri krokoch ——— */
+.card-h { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.card-h .card-t { flex: 1; min-width: 0; }
+.seg { display: flex; flex: none; background: var(--bg3); border: 1px solid var(--line); border-radius: 9px; padding: 2px; }
+.seg button { background: none; border: 0; padding: 6px 11px; border-radius: 7px; font-size: 12px; font-weight: 700; color: var(--text2); }
+.seg button.on { background: var(--bg2); color: var(--text); box-shadow: var(--shadow); }
+.step .stx { min-width: 0; }
+.step .sth { line-height: 1.5; }
+.vys {
+  margin-top: 10px; background: var(--bg3); border-left: 3px solid var(--accent);
+  border-radius: 0 11px 11px 0; padding: 11px 13px;
+}
+.vys .vh { font-weight: 800; font-size: 13.5px; margin-bottom: 5px; }
+.vys .vt { font-size: 14px; line-height: 1.6; color: var(--text2); }
+.vys .vr { margin-top: 7px; font-size: 13.5px; line-height: 1.55; }
+.vys .vr.ok { color: var(--ok); }
+.vys .vr.poz { color: var(--warn); }
+.vys.tep { margin-top: 15px; border-left-color: var(--bad); }
+.vys.tep ul.ings li { padding: 7px 0; font-size: 14px; border-bottom-color: var(--line); }
+
 /* režim varenia – veľké písmo */
 .sheet.cook .sheet-body { font-size: 20px; }
 .sheet.cook .rtitle { font-size: 30px; }
@@ -195,6 +215,10 @@ ul.ings li::before { content: "•"; color: var(--accent); font-weight: 800; }
 .sheet.cook .step { font-size: 21px; line-height: 1.5; }
 .sheet.cook .step .no { width: 34px; height: 34px; font-size: 17px; }
 .sheet.cook .card-t { font-size: 15px; }
+.sheet.cook .seg button { font-size: 15px; padding: 9px 15px; }
+.sheet.cook .vys .vh { font-size: 19px; }
+.sheet.cook .vys .vt, .sheet.cook .vys .vr { font-size: 18.5px; line-height: 1.55; }
+.sheet.cook .vys.tep ul.ings li { font-size: 18.5px; }
 
 /* ——— jedálniček ——— */
 .day { background: var(--bg2); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
@@ -235,7 +259,7 @@ ul.ings li::before { content: "•"; color: var(--accent); font-weight: 800; }
 /* ——— spodné karty ——— */
 .tabs {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  display: grid; grid-template-columns: repeat(5, 1fr);
   background: color-mix(in srgb, var(--bg2) 94%, transparent);
   backdrop-filter: blur(14px);
   border-top: 1px solid var(--line);
@@ -246,7 +270,8 @@ ul.ings li::before { content: "•"; color: var(--accent); font-weight: 800; }
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   color: var(--text2); font-size: 11px; font-weight: 700; min-height: var(--tabh);
 }
-.tabs button .ic { font-size: 23px; line-height: 1.1; filter: grayscale(1) opacity(.6); }
+.tabs button .ic { font-size: 21px; line-height: 1.1; filter: grayscale(1) opacity(.6); }
+@media (max-width: 360px) { .tabs button { font-size: 10px; } }
 .tabs button.on { color: var(--accent); }
 .tabs button.on .ic { filter: none; }
 

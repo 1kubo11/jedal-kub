@@ -6,13 +6,19 @@ Namáčaj bez výčitiek). Celé po slovensky, robené na mobil, dáta zostávaj
 
 ## Čo appka vie
 
-- **Jedálniček** na 1 deň alebo celý týždeň, trafí denný cieľ kalórií aj bielkovín s toleranciou ±5 %.
-  Obedy pondelok–piatok vyberá len z receptov vhodných na meal prep do mikrovlnky
-  (1 alebo 2 recepty navarené vo väčšom, rovnaká veľkosť porcie v celej dávke).
-  Každé jedlo sa dá jedným tlačidlom vymeniť za iné s podobnými kalóriami.
+- **Jedálniček** na 1 deň alebo celý týždeň, **3 až 5 jedál denne**, trafí denný cieľ kalórií
+  aj bielkovín s toleranciou ±5 %. Obedy pondelok–piatok vyberá len z receptov vhodných
+  na meal prep do mikrovlnky (1 alebo 2 recepty navarené vo väčšom, rovnaká veľkosť porcie
+  v celej dávke). Každé jedlo sa dá jedným tlačidlom vymeniť za iné s podobnými kalóriami.
+- **Obedy na týždeň** – vyberieš prílohu, na ktorú máš chuť (ryža, zemiaky, cestoviny, batáty,
+  bulgur/kuskus/quinoa, strukoviny, pečivo, alebo bez prílohy), zadáš počet dní a porcií na deň
+  a appka dohľadá celé obedy do krabičky, prepočíta suroviny na celú dávku a urobí nákup
+  presne na toto varenie. Sleduje pritom kalórie aj bielkoviny v jednej porcii.
 - **Recepty** – vyhľadávanie v názvoch aj surovinách, filtre (kategória, kalórie, bielkoviny,
   štítky, ebook), detail s postupom, prepočet surovín na ľubovoľný počet porcií
   a režim varenia s veľkým písmom.
+- **Podrobný postup** – ku každému kroku sa dá zobraziť vysvetlenie techniky: čo sa pri tom deje,
+  podľa čoho spoznáš, že je to hotové, a kde sa to dá pokaziť. Prepína sa Stručne / Podrobne.
 - **Obľúbené a zakázané suroviny** – obľúbené generátor uprednostňuje, recepty so zakázanou
   surovinou sa nikdy neponúknu ani nezobrazia.
 - **Nákupný zoznam** – automaticky z celého týždňa, rovnaké suroviny spočítané a zoradené
@@ -29,8 +35,9 @@ Namáčaj bez výčitiek). Celé po slovensky, robené na mobil, dáta zostávaj
 | `style.css` | vzhľad, svetlý aj tmavý režim |
 | `data-ck.js`, `data-kbv.js`, `data-jk.js`, `data-mbv.js` | recepty po ebookoch (100 + 105 + 50 + 57) |
 | `data.js` | spojí recepty dokopy, zoznam ebookov, kategórií a štítkov |
-| `suroviny.js` | rozpoznávanie surovín, prepočet množstiev, zaraďovanie do oddelení obchodu |
-| `app.js` | generátor jedálnička, obrazovky, ukladanie |
+| `suroviny.js` | rozpoznávanie surovín, prepočet množstiev, oddelenia obchodu, rozpoznanie prílohy |
+| `techniky.js` | kuchárske vysvetlenia ku krokom postupu |
+| `app.js` | generátor jedálnička, obedy na týždeň, obrazovky, ukladanie |
 | `sw.js` | offline režim |
 
 ### Ako sú uložené recepty
@@ -54,8 +61,9 @@ poškodené suroviny; má príznak `odhad:true` a poznámku priamo v appke.
 
 ## Úpravy
 
-Keď zmeníš ktorýkoľvek súbor, **zvýš číslo verzie v `sw.js`** (`const VERZIA = PREFIX + "v2"`
-→ `"v3"`), inak si telefón nechá starú verziu uloženú v pamäti.
+Keď zmeníš ktorýkoľvek súbor, **zvýš číslo verzie v `sw.js`** (`const VERZIA = PREFIX + "v3"`
+→ `"v4"`), inak si telefón nechá starú verziu uloženú v pamäti. To isté platí aj pri testovaní
+na localhoste – service worker servíruje z pamäte, takže zmeny neuvidíš, kým cache nevyčistíš.
 
 Appka beží na adrese `1kubo11.github.io`, kde je aj *den-po-dni*, a pamäť prehliadača je pre
 celú adresu spoločná. Preto `sw.js` maže iba cache s prefixom `jedalnicek-` a hľadá iba

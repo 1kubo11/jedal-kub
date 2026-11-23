@@ -701,7 +701,36 @@
     return vysledok;
   }
 
+  /* ———————————————————— prílohy ————————————————————
+     Prílohy nie sú samostatné recepty – sú zamiešané v surovinách hotových jedál.
+     Preto ich z receptu rozpoznávame podľa surovín a názvu. */
+  const PRILOHY = {
+    ryza:       { nazov: "Ryža", ikona: "🍚", poradie: 1,
+                  re: /ryž|basmati|risott|rizot/i },
+    zemiaky:    { nazov: "Zemiaky", ikona: "🥔", poradie: 2,
+                  re: /zemiak|zemiač|hranolč|hranolk/i },
+    cestoviny:  { nazov: "Cestoviny", ikona: "🍝", poradie: 3,
+                  re: /cestov[ií]n|špaget|spaget|penne|fusilli|farfall|makar[oó]n|rezanc|lasag|tagliat|tortell|gnocch|halušk|mac ?& ?cheese|tarhon|kolienk|vrtuľk|mašličk/i },
+    bataty:     { nazov: "Batáty", ikona: "🍠", poradie: 4,
+                  re: /bat[aá]t|sladk[ýyéií]\w* zemiak/i },
+    obilniny:   { nazov: "Bulgur, kuskus, quinoa", ikona: "🌾", poradie: 5,
+                  re: /bulgur|kuskus|couscous|quino|poh[aá]nk|jačmen|jačmeň|kr[uú]p[yae]|vločk/i },
+    strukoviny: { nazov: "Strukoviny", ikona: "🫘", poradie: 6,
+                  re: /šošovic|fazuľ|fazul|fazoľ|c[ií]cer|hr[aá]ch|edamam/i },
+    pecivo:     { nazov: "Pečivo a tortilly", ikona: "🌯", poradie: 7,
+                  re: /tortill|wrap|chlieb|chleba|baget|žeml|pita|toast|burgerov|bulk|rožok|rožk/i },
+    ziadna:     { nazov: "Bez prílohy – len mäso a zelenina", ikona: "🥩", poradie: 8, re: null }
+  };
+
+  // vráti zoznam príloh, ktoré sú v recepte (prázdne = "ziadna")
+  function prilohyReceptu(r) {
+    const t = (r.ing.join(" | ") + " | " + r.n).toLowerCase();
+    const out = Object.keys(PRILOHY).filter(k => PRILOHY[k].re && PRILOHY[k].re.test(t));
+    return out.length ? out : ["ziadna"];
+  }
+
   window.SUROVINY = {
-    ODDELENIA, parseSurovinu, zaradSurovinu, surovinaText, nakupnyZoznam, normalizuj, fmtCislo, zaokruhli
+    ODDELENIA, parseSurovinu, zaradSurovinu, surovinaText, nakupnyZoznam, normalizuj, fmtCislo, zaokruhli,
+    PRILOHY, prilohyReceptu
   };
 })();
