@@ -1,7 +1,7 @@
 /* Service worker – aby aplikácia fungovala aj úplne bez internetu.
    Pri každej zmene súborov zvýš číslo verzie, inak si telefón nechá staré. */
 const PREFIX = "jedalnicek-";
-const VERZIA = PREFIX + "v4";
+const VERZIA = PREFIX + "v5";
 
 const SUBORY = [
   "./",

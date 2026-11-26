@@ -1559,7 +1559,78 @@
       "Polož na rošt a griluj desať až dvanásť minút, pravidelne otáčaj, zhruba každé tri minúty.",
       "Ananás obsahuje veľa cukru, ktorý na grile skaramelizuje a dodá mäsu chuť – ale aj rýchlo horí. Keď začne černieť, presuň špízy na chladnejšiu časť roštu.",
       "Hotové je to, keď má kuracie vnútri 74 °C. Nechaj vychladnúť a rozdeľ do dvoch krabičiek."
-    ]
+    ],
 
+    /* ——— polievky z Jesenných krabičiek (tiež do krabičky a mikrovlnky) ——— */
+
+    jk1: [
+      "Cibuľu nakrájaj najemno a cesnak na plátky. V hrnci rozohrej lyžičku olivového oleja a opekaj ich na stredne silnom ohni asi 4 minúty, kým cibuľa nezozlatne a nezačne byť sklovitá. Cesnak dávaj až k takmer hotovej cibuli – spáli sa trikrát rýchlejšie a zhorknutý cesnak prebije celú polievku.",
+      "Tekvicu Hokkaido nešúp, kôra sa pri varení rozvarí sama a dáva polievke farbu. Nakrájaj ju na kocky asi dva centimetre veľké, hoď ich do hrnca a zalej vývarom tak, aby boli tesne zaliate. Priveď k varu a potom stiahni plameň, nech to len mierne bublá. Po pätnástich minútach prepichni kocku nožom – má doň vojsť bez odporu, ako do masla. Ak sa ešte bráni, dovar päť minút.",
+      "Kým sa tekvica varí, nakrájaj slaninu na kocky a daj ju na úplne suchú panvicu na mierny oheň. Žiadny olej netreba, tuk si pustí sama. Nechaj ju tak sedem až osem minút a občas zamiešaj, kým nie je zlatá a chrumkavá. Vyber ju na papierovú utierku a na ten istý tuk hoď tekvicové semienka – stačia dve minúty a začnú praskať, čo je znak, že sú hotové. Pozor, horia veľmi rýchlo.",
+      "Hrniec odstav z plameňa a rozmixuj obsah tyčovým mixérom dohladka. Mixér drž stále pod hladinou, inak si horúcou polievkou ostriekaš celú kuchyňu. Potom vmiešaj smotanu alebo lyžicu gréckeho jogurtu a už polievku nevar – so smotanou sa pri vare zráža. Osoľ, okoreň a slaninku so semienkami nasyp navrch až pri podávaní, nech ostanú chrumkavé."
+    ],
+
+    jk2: [
+      "Cibuľu a cesnak nakrájaj najemno a opeč na kvapke oleja do sklovita, asi tri minúty. Medzitým nakrájaj mrkvu a petržlen na malé kocky, aby sa uvarili rovnako rýchlo ako mäso, a opekaj ich s cibuľou ďalšie štyri minúty. Zelenina má na okrajoch zlatnúť – vtedy z nej vyjde sladkosť, ktorá polievku drží pohromade.",
+      "Hrniec stiahni z plameňa a až potom zasyp mletú papriku. Toto je jediné miesto, kde sa dá polievka nenávratne pokaziť: paprika v horúcom tuku zhorkne za pár sekúnd a tú horkosť už nič neprekryje. Rýchlo premiešaj a ihneď zalej vývarom. Pridaj bobkový list a údené mäso nakrájané na kocky asi centimeter a pol veľké.",
+      "Var pod pokrievkou asi pätnásť minút na miernom ohni, kým mrkva nie je mäkká, ale ešte drží tvar. Potom pridaj prepláchnutú fazuľu z konzervy. Preplákni ju naozaj dôkladne v sitku pod tečúcou vodou – ten hustý nálev je slaný a po ňom polievka chutí plechovo. Fazuli stačia tri minúty, už je uvarená, ide len o to, aby sa prehriala.",
+      "Odober asi dve naberačky polievky do hrnčeka, rozmixuj ich dohladka a vráť späť do hrnca. Takto ju zahustíš bez múky – rozmixovaná fazuľa a koreňová zelenina urobia tú istú prácu. Zamiešaj, dochuť soľou a korením a bobkový list vylov, aby polievka v chladničke nezhorkla. V krabičke ešte zhustne, takže pri ohrievaní pokojne prilej pár lyžíc vody."
+    ],
+
+    jk3: [
+      "Celú hlavičku cesnaku ošúp a každý strúčik nakrájaj na tenké plátky. V hrnci rozpusť lyžičku masla na miernom ohni a plátky doň vlož. Opekaj ich najviac dve minúty, len kým nezačnú voňať a nezmäknú – musia ostať svetlé. Hnedý cesnak je horký a v cesnačke, kde je hlavnou surovinou, to spoznáš na prvú lyžicu. Keď sa ti maslo zdá priveľmi horúce, hrniec odtiahni z plameňa.",
+      "Zalej vývarom a pridaj zemiak nakrájaný na drobné kocky, asi centimeter veľké – menšie kocky sa uvaria rýchlejšie a polievku zároveň prirodzene zahustia. Pridaj rascu a soľ a var asi pätnásť minút na miernom ohni, kým zemiak nie je úplne mäkký a pri zamiešaní sa čiastočne nerozpadáva.",
+      "Majoránku si rozotri medzi prstami priamo nad hrncom a až potom ju vsyp. Teplom z prstov a rozdrvením sa z nej uvolní vôňa, ktorá by inak ostala zavretá v sušených lístkoch. Dávaj ju na záver a polievku už potom dlho nevar, inak vôňa vyprchá.",
+      "Krajec fit chleba nakrájaj na kocky asi dva centimetre veľké a opeč ich na suchej panvici bez tuku na stredne silnom ohni. Priebežne panvicou potriasaj, nech zozlatnú zo všetkých strán, dokopy štyri až päť minút. Krutóny si odlož zvlášť a do polievky ich daj až na tanieri – v krabičke by do rána nasiakli a zmäkli. Strúhaný syr nasyp na horúcu polievku tiež až pri podávaní, nech sa ťahá."
+    ],
+
+    jk4: [
+      "Cibuľu nakrájaj najemno a na lyžičke masla ju na miernom ohni speni, asi tri minúty, kým nie je sklovitá. Potom pridaj šampiňóny nakrájané na plátky a zosilni plameň na maximum. Panvica musí byť horúca a huby voľne rozložené – keď ich nahrnieš na seba, začnú sa dusiť vo vlastnej vode namiesto opekania. Opekaj ich sedem až osem minút: najprv pustia vodu, tá sa musí odpariť, a až potom začnú hnednúť. Tá hnedá farba je celá chuť polievky, neskracuj to.",
+      "Pridaj nasekaný cesnak a lístky čerstvého tymianu, zamiešaj a nechaj ich pol minúty rozvoňať. Zalej vývarom, zoškrab zo dna všetko pripečené, lebo práve tam je najviac chuti, a var desať minút na miernom ohni pod pokrievkou.",
+      "Ak chceš mať v polievke štruktúru, odober si teraz pár lyžíc opečených šampiňónov do hrnčeka. Zvyšok rozmixuj tyčovým mixérom dohladka – mixér drž pod hladinou a hrniec radšej odstav z plameňa. Odložené huby vráť späť do hotovej polievky.",
+      "Vmiešaj smotanu na varenie a polievku už iba prehrej, nevar ju. Osoľ a okoreň až teraz, lebo vývar sa varením odparil a zosolil – keby si solil na začiatku, teraz by bola polievka preslaná. Pár lístkov tymianu si nechaj na ozdobu."
+    ],
+
+    jk5: [
+      "Cibuľu nakrájaj najemno, mrkvu nastrúhaj nahrubo a obe daj na lyžicu olivového oleja. Restuj na stredne silnom ohni asi päť minút. Nastrúhaná mrkva pustí sladkosť rýchlejšie než nakrájaná a polievke dá farbu, takže to neskracuj.",
+      "Brokolicu rozober na ružičky a hlúbik neodhadzuj – spodnú tvrdú časť odkroj, zvyšok ošúp a nakrájaj na kocky, je to tá najsladšia časť. Všetko hoď do hrnca, zalej vývarom a var desať minút od chvíle, keď to začne bublať. Brokolica má byť mäkká, ale ešte zelená; keď zožltne, varí sa priveľmi dlho a polievka bude mať kapustovú príchuť.",
+      "Rozmixuj tyčovým mixérom, ale len krátkymi dávkami – polievka má ostať mierne hrubšia, s cítiteľnými kúskami. Keď ju rozmixuješ na úplne hladký krém, stratí charakter.",
+      "Hrniec odstav z plameňa a nechaj ho pol minúty stáť. Polievka už nesmie vrieť, inak sa syr zráža na gumové vlákna. Potom po troškách vsypávaj strúhaný čedar a priebežne miešaj metličkou, kým sa každá dávka nerozpustí. Nakoniec nastrúhaj trochu muškátového orieška a dosoľ. Muškátového daj naozaj len málo, v syrových polievkach ide veľmi rýchlo cítiť."
+    ],
+
+    jk6: [
+      "Cibuľu nakrájaj najemno, zázvor nastrúhaj na jemnom strúhadle a oboje daj na lyžicu olivového oleja na stredný oheň. Pridaj aj chilli vločky. Restuj tri minúty a miešaj – nastrúhaný zázvor sa pripaľuje rýchlo a pripálený je trpký. Chilli v tuku pustí farbu aj štipľavosť do celej polievky.",
+      "Batáty ošúp a nakrájaj na kocky asi dva centimetre veľké. Hoď ich do hrnca a dve minúty ich obracaj v tom voňavom tuku, nech sa obalia. Potom zalej vývarom a var pätnásť minút na miernom ohni. Hotové sú, keď kocka pri zatlačení vidličkou povolí bez odporu – nedovarený batát sa nerozmixuje dohladka a v polievke ostanú vláknité kúsky.",
+      "Hrniec odstav a rozmixuj tyčovým mixérom na zamatový krém. Batáty sú škrobové, takže polievka zhustne viac, než čakáš; ak je príliš hustá, prilej pár lyžíc vývaru alebo vody.",
+      "Nakoniec vmiešaj kokosové mlieko z plechovky, zamiešaj ho dôkladne, aby sa spojilo, a polievku už len prehrej. Dochuť soľou – kokosové mlieko chuť zjemní a utlmí aj chilli, takže až teraz zistíš, či je polievka dosť ostrá a slaná."
+    ],
+
+    jk7: [
+      "Rúru vyhrej na 200 °C. Paradajky prekroj na polovice, papriky očisti od jadier a nakrájaj na štvrtiny, cibuľu tiež na štvrtiny. Cesnak nešúp, nechaj strúčiky v šupke – vnútro sa upečie na sladkú kašu a nezhorkne. Všetko rozlož na plech s papierom na pečenie v jednej vrstve, rezom nahor, pokvapkaj olivovým olejom a osoľ. Peč dvadsaťpäť až tridsať minút, kým okraje papriky nezačnú černať. Tie opečené miesta sú presne to, čo dáva polievke chuť, takže sa ich neboj.",
+      "Nechaj plech dve minúty postáť, aby si sa nepopálil. Z upečených strúčikov cesnaku vytlač vnútro priamo do hrnca, šupky vyhoď. Papriku a paradajky presuň do hrnca spolu so všetkou šťavou, ktorá sa zbehla na plechu – je v nej skoncentrovaná polovica chuti, nevylievaj ju.",
+      "Zalej vývarom a rozmixuj tyčovým mixérom dohladka. Ak ti vadia zvyšky paradajkových šupiek, prepasíruj polievku cez sitko, ale nutné to nie je. Krátko prehrej a dochuť soľou a čiernym korením.",
+      "Čerstvú bazalku natrhaj rukami, nekrájaj ju nožom – na reze sčernie. Vmiešaj ju do polievky až po odstavení z plameňa, varením by celá vôňa odišla. Pár lístkov si nechaj navrch."
+    ],
+
+    jk8: [
+      "Šošovicu, ktorú si mal namočenú aspoň dve hodiny, prepláchni v sitku pod tečúcou vodou. Namáčanie nepreskakuj, inak sa bude variť dvakrát dlhšie a bude ťažšia na žalúdok. Zalej ju v hrnci vodou tak, aby bola asi tri centimetre nad šošovicou, pridaj celú ošúpanú cibuľu, bobkové listy a celé čierne korenie. Var dvadsať minút na miernom ohni bez soli – soľ na začiatku šošovicu zatvrdne.",
+      "Pridaj zemiaky nakrájané na kocky asi dva centimetre veľké a teraz už osoľ. Var ďalších desať až pätnásť minút, kým zemiak aj šošovica nie sú mäkké. Šošovica má povoliť pod zubom, ale nerozpadnúť sa na kašu, takže ju radšej kontroluj každých päť minút.",
+      "Odober z hrnca jednu naberačku, rozmixuj ju v hrnčeku dohladka a vráť späť. Polievka tým zhustne bez múky a zároveň v nej ostane dosť celých šošovíc. Celú cibuľu a bobkové listy vylov a vyhoď.",
+      "Hrniec odstav z plameňa a nechaj ho chvíľu vychladnúť. Jogurt daj do hrnčeka a po lyžiciach doň primiešaj tri až štyri lyžice horúcej polievky – vyrovnáš tým teplotu a jogurt sa nezrazí. Až tento zriedený jogurt vlej do hrnca a zamiešaj. Potom dochuť octom po lyžiciach a priebežne skúšaj, kyslosť si každý nastaví inak, a nakoniec vyváž sladidlom. Polievku už nevar."
+    ],
+
+    jk9: [
+      "Zeler ošúp, odkroj vláknité miesta a nakrájaj ho na kocky asi centimeter a pol veľké. Zemiak a cibuľu nakrájaj podobne. V hrnci rozpusť lyžicu masla a všetko krátko orestuj, asi štyri minúty – nemá to zhnednúť, len sa obaliť v masle a trochu zmäknúť. Maslo drž na miernom ohni, inak sa pripáli a dá polievke horkú dochuť.",
+      "Zalej vývarom a var pod pokrievkou asi dvadsať minút. Zeler je tvrdší než zemiak, takže sa orientuj podľa neho – kocka sa musí dať rozmáčknuť o stenu hrnca bez tlaku. Nedovarený zeler sa nerozmixuje a v kréme ostanú tvrdé zrnká.",
+      "Hrniec odstav a rozmixuj tyčovým mixérom na jemný krém. Zeler je vláknitý, takže mixuj dlhšie, než by si čakal, aspoň minútu. Ak je krém príliš hustý, zrieď ho mliekom alebo rastlinnou náhradou po troškách, kým nemá konzistenciu hustej smotany. Dochuť soľou a bielym korením – k zeleru sa hodí lepšie a nenechá v svetlom kréme čierne bodky.",
+      "Vlašské orechy nasekaj nahrubo a opeč ich na suchej panvici na strednom ohni tri až štyri minúty, kým nezavoňajú a nezačnú tmavnúť. Priebežne nimi potriasaj. Orechy sú mastné a prepaľujú sa z minúty na minútu, takže ich sleduj a hneď ich presyp z panvice na tanierik. Na polievku sa sypú až pri podávaní, nech sú chrumkavé."
+    ],
+
+    jk10: [
+      "Bielu cibuľu nakrájaj najemno a na lyžici olivového oleja ju orestuj do sklovita, asi tri až štyri minúty na miernom ohni. Nemá zhnednúť – hnedá cibuľa by bola v svetlom kréme vidieť aj cítiť. Potom pridaj karfiol rozobraný na ružičky veľké asi ako vlašský orech a zalej zeleninovým vývarom.",
+      "Priveď k varu, stiahni plameň a var pätnásť minút pod pokrievkou. Karfiol je hotový, keď ružička zíde z vidličky sama. Tu je lepšie prevariť než nedovariť, nedovarený karfiol zostane v kréme ako zrnká.",
+      "Hrniec odstav z plameňa a rozmixuj tyčovým mixérom na hladký krém. Karfiol sa mixuje ľahko a krém vyjde prirodzene hustý aj bez smotany, takže ak je priveľmi hustý, radšej zrieď vývarom.",
+      "Modrý syr rozmrv rukami na menšie kúsky. Polovicu vmiešaj do polievky, kým je ešte horúca, nech sa rozpustí – vrieť ale už nesmie. Zvyšok nechaj na ozdobu navrch, aby v ňom ostali cítiť kúsky. Soľ dávaj až na konci a opatrne, modrý syr je sám veľmi slaný. Posyp nasekanou pažítkou."
+    ]
   };
 })();

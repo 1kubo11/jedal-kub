@@ -17,7 +17,7 @@
       jedlaDenne: 4, pocetObedov: 2, tema: "auto", podrobne: true
     },
     oblubene: [], zakazane: [], plan: null, nakup: [], nakupNedela: [],
-    obedy: null, nakupObedy: []
+    obedy: null, nakupObedy: [], historia: []
   };
   let S = load();
   function load() {
@@ -29,7 +29,8 @@
         nastavenia: Object.assign({}, DEFAULT.nastavenia, p.nastavenia || {}),
         oblubene: p.oblubene || [], zakazane: p.zakazane || [],
         plan: p.plan || null, nakup: p.nakup || [], nakupNedela: p.nakupNedela || [],
-        obedy: p.obedy || null, nakupObedy: p.nakupObedy || []
+        obedy: p.obedy || null, nakupObedy: p.nakupObedy || [],
+        historia: Array.isArray(p.historia) ? p.historia : []
       };
     } catch (e) { return JSON.parse(JSON.stringify(DEFAULT)); }
   }
@@ -71,10 +72,20 @@
   }
   const JE_OBL = id => S.oblubene.includes(id);
 
+  // Ebook ich zaradil inde, ale ako raňajky fungujú: sladké kaše, vločky, lievance
+  // a rýchle vajcové či wrapové jedlá. Vlastný výber, nie údaj z knihy.
+  const AJ_RANAJKY = [
+    "ck100", "kbv91", "kbv92", "kbv93", "kbv94", "kbv98", "kbv99", "kbv100", "kbv104",
+    "jk32", "jk33", "jk40", "jk50",
+    "ck55", "ck79", "ck82", "ck83", "ck90",
+    "kbv50", "kbv61", "kbv62", "kbv64", "kbv67", "kbv70", "kbv72", "kbv75"
+  ];
   function pool(kind) {
     let f;
-    if (kind === "ranajky") f = r => r.c === "ranajky";
-    else if (kind === "hlavne") f = r => r.c === "obed" || r.c === "vecera";
+    if (kind === "ranajky") f = r => r.c === "ranajky" || AJ_RANAJKY.indexOf(r.id) >= 0;
+    // polievka je plnohodnotný obed či večera, ale do sekcie Obedy na týždeň nepatrí:
+    // v jednej porcii sa z nej cieľ bielkovín vytiahnuť nedá
+    else if (kind === "hlavne") f = r => r.c === "obed" || r.c === "vecera" || r.c === "polievka";
     else if (kind === "mealprep") f = r => (r.c === "obed" || r.c === "vecera") && r.t.includes("mealprep") && r.t.includes("mikrovlnka");
     else if (kind === "desiata") f = r => r.c === "desiata" || r.c === "dezert" || r.c === "napoj";
     else f = () => true;
@@ -84,7 +95,6 @@
   /* ———————————————————— generátor ———————————————————— */
   const FAKTORY = (() => { const a = []; for (let f = 0.5; f <= 2.001; f += 0.1) a.push(Math.round(f * 10) / 10); return a; })();
   const FAKTORY_HRUBE = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
-  const rnd = a => a[Math.floor(Math.random() * a.length)];
 
   // najlepší počet porcií receptu pre daný kalorický cieľ
   function najlepsiFaktor(r, cielKcal, grid) {
@@ -96,24 +106,52 @@
     return { f: bf, e: bc };
   }
 
-  // vyberie recept podľa toho, ako presne sa dá trafiť cieľ (nie len podľa kcal na porciu).
-  // cielB je nepovinný – keď ho zadáš, trestá sa jedlo s málo bielkovinami
-  // (pri dennom pláne to rieši až súčet za celý deň, preto tam ostáva prázdny)
-  function vyberRecept(p, cielKcal, pouzite, grid, cielB, topN) {
+  /* ——— rozmanitosť: naposledy použité recepty sa dočasne potláčajú ——— */
+  const HISTORIA_MAX = 90;
+  // 0 = dávno alebo nikdy, 1 = použitý naposledy
+  function cerstvost(id) {
+    const i = S.historia.indexOf(id);
+    return i < 0 ? 0 : 1 - i / HISTORIA_MAX;
+  }
+  function zapisHistoriu(ids) {
+    const nove = ids.filter((x, i) => ids.indexOf(x) === i);
+    S.historia = nove.concat(S.historia.filter(x => nove.indexOf(x) < 0)).slice(0, HISTORIA_MAX);
+  }
+  // náhodný výber, kde väčšia váha znamená väčšiu šancu
+  function vazeny(polozky, vahy) {
+    let x = Math.random() * vahy.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < polozky.length; i++) { x -= vahy[i]; if (x <= 0) return polozky[i]; }
+    return polozky[polozky.length - 1];
+  }
+
+  // Vyberie recept spomedzi VŠETKÝCH, ktoré sa do cieľa vmestia – nie len z niekoľkých
+  // najpresnejších, inak by stále vychádzali tie isté. Šancu zvyšuje presnejší zásah
+  // cieľa a obľúbenosť, znižuje nedávne použitie, takže sa recepty točia.
+  // cielB je nepovinný: keď ho zadáš, jedlo musí dať aj bielkoviny
+  // (pri dennom pláne to rieši súčet za celý deň, preto tam ostáva prázdny).
+  // tol.kcal = ako ďaleko smie byť jedlo od kalorického cieľa, tol.bielk = koľko smie chýbať bielkovín
+  function vyberRecept(p, cielKcal, pouzite, grid, cielB, tol) {
     if (!p.length) return null;
     grid = grid || FAKTORY;
+    const tolK = tol && tol.kcal !== undefined ? tol.kcal : 0.2;
+    const tolB = tol && tol.bielk !== undefined ? tol.bielk : 0.35;
     const sc = p.map(r => {
       const b = najlepsiFaktor(r, cielKcal, grid);
-      let s = b.e + (pouzite[r.id] || 0) * 0.6;
-      if (cielB) s += 1.5 * Math.max(0, (cielB - r.pr * b.f) / cielB);   // prebytok bielkovín nevadí
-      if (JE_OBL(r.id)) s -= 0.25;
-      return { r, f: b.f, s };
-    }).sort((a, b) => a.s - b.s);
-    const top = sc.slice(0, Math.min(topN || 14, sc.length));
-    const w = top.map((_, i) => 1 / (i + 1.6));
-    let x = Math.random() * w.reduce((a, b) => a + b, 0);
-    for (let i = 0; i < top.length; i++) { x -= w[i]; if (x <= 0) return top[i]; }
-    return top[0];
+      return { r, f: b.f, ek: b.e, eb: cielB ? Math.max(0, (cielB - r.pr * b.f) / cielB) : 0 };
+    });
+    let vhodne = sc.filter(x => x.ek <= tolK && x.eb <= tolB);
+    // keď je sito pritesné (málo receptov na danú prílohu), vezmi aspoň tie najbližšie
+    if (vhodne.length < 6)
+      vhodne = sc.slice().sort((a, b) => (a.ek + 2 * a.eb) - (b.ek + 2 * b.eb)).slice(0, Math.min(6, sc.length));
+    const vahy = vhodne.map(x => {
+      // každá zložka zvlášť obmedzená zdola, inak by dva mínusy dali veľké plus
+      const pk = Math.max(0, 1 - 0.7 * x.ek / (tolK + 0.02));
+      const pb = Math.max(0, 1 - 0.7 * x.eb / (tolB + 0.02));
+      let v = Math.max(pk * pb, 0.08);
+      if (JE_OBL(x.r.id)) v *= 2.5;
+      return v / (1 + 3 * (pouzite[x.r.id] || 0) + 1.6 * cerstvost(x.r.id));
+    });
+    return vazeny(vhodne, vahy);
   }
 
   function cenaDna(meals, c) {
@@ -210,7 +248,8 @@
       const batch = [];
       for (let i = 0; i < kolko; i++) {
         // porcia obeda sa volí raz a platí pre celú navarenú dávku
-        const sel = vyberRecept(mp.filter(x => !batch.some(b => b.id === x.id)), cielObed, pouzite, FAKTORY);
+        const sel = vyberRecept(mp.filter(x => !batch.some(b => b.id === x.id)), cielObed, pouzite,
+                                FAKTORY, c.bielk * podiely().obed, { bielk: 0.3 });
         if (!sel) break;
         batch.push({ id: sel.r.id, p: sel.f, batch: "B" + (i + 1) });
         pouzite[sel.r.id] = (pouzite[sel.r.id] || 0) + 1;
@@ -225,6 +264,7 @@
         dni.push({ nazov: DNI[d], meals: res.meals });
       }
     }
+    zapisHistoriu(dni.reduce((a, d) => a.concat(d.meals.map(m => m.id)), []));
     S.plan = { mode, dni, vytvorene: Date.now() };
     S.nakup = []; S.nakupNedela = [];
     save();
@@ -264,8 +304,12 @@
     let kand = pool(kind).filter(r => r.id !== m.id && Math.abs(r.k * m.p - cielK) / cielK <= 0.22);
     if (!kand.length) kand = pool(kind).filter(r => r.id !== m.id);
     if (!kand.length) { toast("Nie je za čo vymeniť."); return; }
-    kand.sort((a, b) => (JE_OBL(b.id) - JE_OBL(a.id)) || (Math.abs(a.k * m.p - cielK) - Math.abs(b.k * m.p - cielK)));
-    const novy = rnd(kand.slice(0, Math.min(10, kand.length)));
+    // náhodne spomedzi všetkých vhodných – obľúbené majú väčšiu šancu, nedávne menšiu
+    const novy = vazeny(kand, kand.map(r => {
+      const presnost = 1 - 0.7 * Math.abs(r.k * m.p - cielK) / (cielK * 0.25);
+      return Math.max(presnost, 0.1) * (JE_OBL(r.id) ? 2.5 : 1) / (1 + 1.6 * cerstvost(r.id));
+    }));
+    zapisHistoriu([novy.id]);
     const c = ciele();
     let dotknute = [di];
     if (m.batch) {
@@ -308,6 +352,7 @@
     else if (r.t.includes("studene")) out.push('<span class="tag">studené</span>');
     if (r.t.includes("rychle")) out.push('<span class="tag fast">do 20 min</span>');
     if (r.t.includes("bezmasa")) out.push('<span class="tag">bez mäsa</span>');
+    if (r.c !== "ranajky" && AJ_RANAJKY.indexOf(r.id) >= 0) out.push('<span class="tag">aj na raňajky</span>');
     return out.join(" ");
   }
 
@@ -397,8 +442,9 @@
     for (let i = 0; i < kolko; i++) {
       const zvysne = p.filter(r => !vybrane.some(v => v.id === r.id));
       if (!zvysne.length) break;
-      // užší výber než pri dennom pláne – tu ide o jedno jedlo, ktoré budeš jesť celý týždeň
-      const sel = vyberRecept(zvysne, cielK, pouzite, FAKTORY, cielB, 6);
+      // tesnejšie sito než pri dennom pláne – tento obed budeš jesť niekoľko dní,
+      // kalórie ani bielkoviny už nemá čím dorovnať zvyšok dňa
+      const sel = vyberRecept(zvysne, cielK, pouzite, FAKTORY, cielB, { kcal: 0.1, bielk: 0.16 });
       if (!sel) break;
       vybrane.push({ id: sel.r.id, p: sel.f });
       pouzite[sel.r.id] = 1;
@@ -406,6 +452,7 @@
     if (!vybrane.length) { toast("Na túto prílohu nemám obed do krabičky."); return; }
     const dni = rozdelDni(OB.dni, vybrane.length);
     vybrane.forEach((v, i) => v.dni = dni[i]);
+    zapisHistoriu(vybrane.map(v => v.id));
     S.obedy = { priloha: OB.priloha, dni: OB.dni, porcieNaDen: OB.porcieNaDen, pocet: OB.pocet, polozky: vybrane, vytvorene: Date.now() };
     S.nakupObedy = [];
     save();
@@ -416,8 +463,11 @@
     const o = S.obedy, item = o.polozky[i];
     const p = obedPool(o.priloha).filter(r => !o.polozky.some(v => v.id === r.id));
     if (!p.length) { toast("Nie je za čo vymeniť."); return; }
-    const sel = vyberRecept(p, cielPorcie(), {}, FAKTORY, cielPorcieB(), 6);
+    // pri ručnej výmene je sito voľnejšie než pri návrhu – vyberáš si sám,
+    // takže sa dostaneš aj k receptom, ktoré cieľ trafia len tak-tak
+    const sel = vyberRecept(p, cielPorcie(), {}, FAKTORY, cielPorcieB(), { kcal: 0.15, bielk: 0.25 });
     item.id = sel.r.id; item.p = sel.f;
+    zapisHistoriu([sel.r.id]);
     S.nakupObedy = [];
     save(); render();
     toast(sel.r.n);
@@ -462,7 +512,9 @@
       "</select></label></div>" +
       '<button class="btn pri block" id="go" style="margin-top:12px">🍱 Navrhni obedy</button>' +
       '<div class="muted" style="margin-top:10px">Vyberá len z receptov, ktoré vydržia v chladničke a dajú sa ohriať v mikrovlnke. ' +
-      "Porciu nastaví na <b>" + cielK + " kcal</b>, čo je tvoj obed z cieľa " + c.kcal + " kcal.</div>";
+      "Porciu nastaví na <b>" + cielK + " kcal</b>, čo je tvoj obed z cieľa " + c.kcal + " kcal. " +
+      "Každé ďalšie ťuknutie dá iné recepty – naposledy použité appka na chvíľu odloží, " +
+      "a tlačidlom <b>Vymeň</b> sa dostaneš aj k tým, ktoré cieľ trafia len tak-tak.</div>";
     w.appendChild(nast);
     nast.querySelector("#dni").onchange = e => { OB.dni = +e.target.value; render(); };
     nast.querySelector("#pn").onchange = e => { OB.porcieNaDen = +e.target.value; render(); };
